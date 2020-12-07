@@ -61,43 +61,54 @@
 
   <div id="reg-top">&nbsp;&nbsp;&nbsp;&nbsp;会员注册</div>
   <div id="reg-mleft">
-  <form onsubmit="return check()">
+  <form onsubmit="return false" action="##" id="regist">
     <ul>
       <li class="m">用户帐号 </li>
       <li class="r" >
-        <input name="textfield" type="text" class="box txtInit" id="txtNo" />
+        <input name="account" type="text" class="box txtInit" id="txtNo" />
         <span id='prompt_no' class="spanInit" ></span></li>
       <li class="m">设置密码 </li>
       <li class="r">
-        <input name="textfield" type="password" class="box txtInit" id="txtPwd" />
+        <input name="password" type="password" class="box txtInit" id="txtPwd" />
         <span id='prompt_pwd'  class="spanInit" ></span></li>
       <li class="m">确认密码 </li>
       <li class="r">
-        <input name="textfield" type="password" class="box txtInit" id="txtConfirmPwd" />
+        <input name="name" type="password" class="box txtInit" id="txtConfirmPwd" />
         <span id='prompt_confirmpwd' class="spanInit"  ></span></li>
       <li class="m">用户姓名 </li>
       <li class="r">
-        <input name="textfield" type="text" class="box txtInit" id="txtName" />
+        <input name="identityID" type="text" class="box txtInit" id="txtName" />
         <span id='prompt_name' class="spanInit"  ></span></li>
       <li class="m">身份证号 </li>
       <li class="r">
-        <input name="textfield" type="text" class="box txtInit" id="txtId" />
+        <input name="gender" type="text" class="box txtInit" id="txtId" />
         <span id='prompt_id' class="spanInit"   ></span></li>
       <li class="m">性 别 </li>
       <li class="r">
-        <input name="radio" type="radio" id="radio" value="radio" checked="checked" />
+        <input name="radio" type="radio" id="radio" value="男" checked="checked" />
         男
-        <input type="radio" name="radio" id="radio2" value="radio" />
+        <input type="radio" name="radio" id="radio2" value="女" />
         女 </li>
       <li class="m">手机号码 </li>
       <li class="r">
-        <input name="textfield" type="text" class="box txtInit" id="txtPhone" />
+        <input name="tel" type="text" class="box txtInit" id="txtPhone" />
         <span id='prompt_phone' class="spanInit" ></span></li>
+
       <li class="m">校验码 </li>
       <li class="r">
-        <input name="textfield" type="text" class="box txtInit" id="textfield" size="15" />
-        看不清？<a href="#">换一张</a></li>
-      <li class="m"> </li>
+        <input name="code" type="text" class="box txtInit" id="textfield" size="15" />
+      </li>
+
+      <li class="m"></li>
+      <div class="m" style="display: inline">
+        <img id="captchaCode" src="/getCaptcha"/>
+      </div>
+      <div class="r" onclick="changeCaptcha()" style="display: inline;">
+        看不清？<a href="javascript:void(0);">换一张</a>
+      </div>
+
+
+
       <li class="r">
         <input name="button" type="image" id="button" value="提交" src="images/but2.jpg" th:src="@{qt/images/but2.jpg}" />
       </li>
@@ -123,5 +134,48 @@
     <p><a href="#">隐私保护</a> | <a href="#">诚聘英才</a> | <a href="#">关于我们</a> | <a href="#">网站地图</a> | <a href="#">友情链接</a> | <a href="#">商务合作</a></p>
   </div>
 </div>
+
+<script type="text/javascript">
+  function changeCaptcha() {
+    console.log("chang事件被触发");
+      $.ajax(({
+        url: '/getCaptchaBase64',
+        type: "get",
+        success: function (result) {
+          $("#captchaCode").attr('src', result.url);
+        },
+        error: function () {
+          console.log("验证码获取失败");
+        }
+      }))
+  }
+
+  $(document).ready(function () {
+
+      //设置注册事件
+      $("#button").click(function () {
+        $.ajax({
+          url: '/customer/regist',
+          type: "post",
+          contentType: "application/x-www-form-urlencoded",
+          data: $("#regist").serialize(),
+          success: function (result) {
+            console.log("res是", result);
+            if(result.success) {
+              alert("注册成功");
+              window.location.href = "/login.html";
+            }else {
+              alert(result.msg);
+            }
+          },
+          error: function () {
+            alert("异常");
+          }
+        })
+      })
+  })
+
+</script>
+
 </body>
 </html>

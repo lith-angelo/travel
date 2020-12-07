@@ -305,7 +305,8 @@ h2{ font-size:12px; font-weight:100;}
 #reg-top{ height:38px; background:url(../images/tt-bg.jpg) repeat-x; font-size:14px; font-weight:bold; line-height:38px;}
 #reg-mleft{ float:left; margin-top:30px; width:515px; border-right:1px #CCC solid; padding-left:50px}
 #reg-mleft ul li{ color:#4e4e4e; line-height:20px; float:left;}
-.m{ width:70px; text-align:right; height:45px;}
+.m{ width:70px; text-align:right; height:45px;
+    max-resolution: 10px;}
 .r{ width:440px; text-align:left; height:45px;  padding-left:3px}
 
 #reg-right{ margin-top:30px; width:230px; float:right;}

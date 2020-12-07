@@ -65,10 +65,21 @@
   $(document).ready(function() {
     $("#button").click(function() {
       $.ajax({
-        url: "#",
+        url: "/customer/login",
+        type: "post",
+        contentType: "application/x-www-form-urlencoded",
+        data: {account: $("#txtLoginNo").val(), password: $("#txtPwd").val()},
         success: function(result) {
-          alert($("#txtLoginNo").val() + " " + $("#txtPwd").val());
-      }})
+          console.log(result);
+          if(result["success"]) {
+            window.location.href = "/index.html";
+          }else {
+            alert(result["msg"]);
+          }
+      },
+        error: function () {
+            alert("异常");
+        }})
     })
   })
 </script>
