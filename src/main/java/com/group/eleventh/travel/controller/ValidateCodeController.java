@@ -50,7 +50,7 @@ public class ValidateCodeController {
      * @return
      */
     @GetMapping("/checkCaptcha")
-    public boolean getCheckCaptcha(@RequestParam("code") String code, HttpSession session) {
+    public boolean checkCaptcha(@RequestParam("code") String code, HttpSession session) {
 
         try {
             //toLowerCase() 不区分大小写进行验证码校验
