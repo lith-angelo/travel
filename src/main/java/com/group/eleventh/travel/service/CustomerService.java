@@ -44,7 +44,7 @@ public class CustomerService {
                 e.printStackTrace();
             }
         }else {
-            result.setDetail("验证码错误");
+            result.setMsg("验证码错误");
         }
         return result;
     }

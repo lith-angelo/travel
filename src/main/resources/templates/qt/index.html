@@ -198,11 +198,28 @@
   <div id="con-2right">
     <div id="con-2meun">
       <ul>
-        <li><a href="#">境内游</a></li>
-        <li><a href="#">境外游</a></li>
-        <li><a href="#">海岛游</a></li>
-        <li><a href="#">自驾游</a></li>
+        <li><a href="javascript:void(0)" onclick="Line('境内游')">境内游</a></li>
+        <li><a href="javascript:void(0)" onclick="Line('境外游')">境外游</a></li>
+        <li><a href="javascript:void(0)" onclick="Line('海岛游')">海岛游</a></li>
+        <li><a href="javascript:void(0)" onclick="Line('自驾游')">自驾游</a></li>
       </ul>
+    </div>
+
+    <div th:fragment="AjaxLine" id="AjaxLine">
+      <div th:each="bottom:${session.bottom}">
+        <div class="con-2inf">
+          <ul>								<!--    th:src="@{ajpg}" -->
+            <li class="w130"><a href="#"><img th:src="@{|images/${bottom.name}}" width="120" height="75" /></a> 产品编号：135356</li>
+            <li class="w440">
+              <div class="w440lx"><a href="#" th:text="[+${bottom.days}+日游] +'&nbsp;&nbsp;'+${bottom.linename}+双飞+${bottom.days}+日游 +'&nbsp;&nbsp;交通工具（'+${bottom.vehicle}+'）'">[4日游] &nbsp;&nbsp;厦门双飞4日游 &nbsp;&nbsp;交通工具（飞机）</a></div>
+              <div class="w440xx"><a href="#" th:text="简介：+${bottom.introduction}">简介：住1晚鼓浪屿特色旅馆，1天自由活动</a> <br />
+                本线路已有<span>5144</span>人出游 </div>
+            </li>
+            <li class="w140"><br />
+              <span th:text="'￥'+${bottom.price}+'元/每人'">￥1664元/每人</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
     
     
@@ -301,5 +318,21 @@
     <p><a href="#">隐私保护</a> | <a href="#">诚聘英才</a> | <a href="#">关于我们</a> | <a href="#">网站地图</a> | <a href="#">友情链接</a> | <a href="#">商务合作</a></p>
   </div>
 </div>
+</div>
+
+<script type="text/javascript">
+  function Line(lineType){
+     $.ajax({
+        type:"post",
+        url:"IndexBottom",
+        data:{typename: lineType},
+        success:function(data){
+            $("#AjaxLine").html(data)
+        }
+    })
+    $("#AjaxLine").load("IndexBottom",{typename:lineType});
+  }
+</script>
+
 </body>
 </html>
